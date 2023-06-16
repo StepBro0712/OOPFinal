@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+
+  {% block title %}<title>TomskDisigne</title>{% endblock %}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css'%}">
+  <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+
+</head>
+
+<body>
+<div class="container-fluid px-0">
+    <header class="header">
+            <section>
+                 <h4 class="mr-md-auto p-2 text-white">TomskDisigne</h4>
+                <nav>
+                    <li><a  href="{% url 'index'  %}">ГЛАВНАЯ</a></li>
+                    {% if user.is_authenticated %}
+                    <li><a class="" href="{%url 'profile'%}">ЛИЧНЫЙ КАБИНЕТ</a></li>
+                    <li><a class="" href="{%url 'logout'%}">ВЫХОД</a></li>
+                      {% else %}
+
+                    <li><a href="{%url 'register'%}">РЕГИСТРАЦИЯ</a></li>
+                    <li><a href="{%url 'login'%}">ВХОД</a>
+                    {% endif %}
+               </nav>
+            </section>
+        </header>
+
+       <div class="bg-white ">
+       <div class="window">
+           <p>МЫ ПРЕДОСТАВЛЯЕМ<br> ЛУЧШИЕ РЕШЕНИЯ<br>НА РЫНКЕ</p>
+                <P>Многие годы мы помогаем клиентам<br>
+                    создавать интерьер их мечты. <br>ВЫ можете отправить свои эскизы, <br> а мы реализуем их и покажем<br>
+                как будет выглядеть ваш будущий дом</P>
+       </div>
+
+
+   </div>
+
+   <div class="bg-white">
+       <div class="container bg-white m-auto-0">
+       {% block content %}
+       {% endblock %}
+       </div>
+   </div>
+    {% block pagination %}
+    {% if is_paginated %}
+        <div class="pagination justify-content-center m-auto bg-white">
+            <span class="page-links">
+                {% if page_obj.has_previous %}
+                    <a href="{{ request.path }}?page={{ page_obj.previous_page_number }}">Предыдущая</a>
+                {% endif %}
+                <span class="page-current">
+                    Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}.
+                </span>
+                {% if page_obj.has_next %}
+                    <a href="{{ request.path }}?page={{ page_obj.next_page_number }}">Следующая</a>
+                {% endif %}
+            </span>
+        </div>
+    {% endif %}
+  {% endblock %}
+
+
+    <footer class="footer_part d-flex justify-content-center align-items-center ">
+        <div class="copyright_part">
+            <div class="container">
+                <div class="row ">
+                    <div class="col-lg-12">
+                        <div class="copyright_text">
+                            <P><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+Copyright &copy;<script>document.write(new Date().getFullYear());</script> Все права защищены</P>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</div>
+
+</body>
+
+</html>

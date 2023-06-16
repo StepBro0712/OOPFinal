@@ -1,0 +1,45 @@
+{% extends "base_generic.html" %}
+{% block content %}
+
+<p class="zgl">Ваши объявления</p>
+
+           <div class="d-flex justify-content-center">
+                <p class="sl"> <a href="{% url 'profile' %}">Все</a></p>
+                <p class="sl"><a href="{% url 'profile' %}?status=new"> Новые </a></p>
+                <p class="sl"> <a href="{% url 'profile' %}?status=in work"> В работе</a>  </p>
+                <p class="sl"> <a href="{% url 'profile' %}?status=done"> Выполненые </a></p>
+            </div>
+
+<div class="content-window ">
+
+
+ <p class="sl"><a href="{% url 'createapp' %}"> + Создать новое объявление</a></p>
+</div>
+{% if application_list %}
+
+
+  <ul>
+   {% for application in application_list %}
+                     <div class=" box-shadow content-window">
+                          <div class="d-flex ">
+                                <div>
+                                     <img src="{{application.image.url}}">
+                                </div>
+                                <div>
+                                    <div class="d-flex justify-content-between">
+                                         <p class="p-2"> {{application.name}} ({{application.categories}})</p>
+                                        <p class="p-2"> {{application.date}} - ({{application.status}})
+                                            {% if application.status == 'new' %}
+                                <a href="{% url 'delete_application' application.pk %}">Удалить заказ</a>
+                            {%          endif %}</p>
+                                    </div>
+                                    <p class="p-2"> {{application.description}}</p>
+                                </div>
+                         </div>
+                    </div>
+            {% endfor %}
+  </ul>
+ {% else %}
+    <p class="zgl">Объявлений нет</p>
+  {% endif %}
+{% endblock %}

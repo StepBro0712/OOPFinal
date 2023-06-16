@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+
+  {% block title %}<title>TomskDisigne</title>{% endblock %}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css'%}">
+  <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+
+</head>
+<body>
+<div class="container-fluid px-0">
+    <header class="header">
+            <section>
+                 <h4 class="mr-md-auto p-2 text-white">TomskDisigne</h4>
+                <nav>
+                    <li><a  href="{% url 'index'  %}">ГЛАВНАЯ</a></li>
+                    {% if user.is_authenticated %}
+                    <li><a class="" href="{%url 'profile'%}">ЛИЧНЫЙ КАБИНЕТ</a></li>
+                    <li><a class="" href="{%url 'logout'%}">ВЫХОД</a></li>
+                      {% else %}
+
+                    <li><a href="{%url 'register'%}">РЕГИСТРАЦИЯ</a></li>
+                    <li><a href="{%url 'login'%}">ВХОД</a>
+                    {% endif %}
+               </nav>
+            </section>
+        </header>
+    <div class="bg-white wit d-flex justify-content-center align-items-center flex-column for-form">
+<p class="zgl">Вход в аккаунт</p>
+  {% if form.errors %}
+    <div class="alert-danger">
+        <p>Неправильный логин или пароль</p>
+    </div>
+  {% endif %}
+
+{% if user.is_authenticated %}
+      <p>Вы уже авторизованы. <a href="{% url 'logout'%}">Выйти</a> </p>
+{% else %}
+    <form method="post" action="{% url 'login' %}">
+    {% csrf_token %}
+    <table>
+      <tr>
+        <td>{{ form.username.label_tag }}</td>
+        <td>{{ form.username }}</td>
+      </tr>
+      <tr>
+        <td>{{ form.password.label_tag }}</td>
+        <td>{{ form.password }}</td>
+      </tr>
+    </table>
+    <input type="submit" value="Войти">
+    <input type="hidden" name="next" value="{{ next }}">
+  </form>
+{% endif %}
+
+    </div>
+ <footer class="footer_part d-flex justify-content-center align-items-center ">
+        <div class="copyright_part">
+            <div class="container">
+                <div class="row ">
+                    <div class="col-lg-12">
+                        <div class="copyright_text">
+                            <P><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+Copyright &copy;<script>document.write(new Date().getFullYear());</script> Все права защищены</P>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>

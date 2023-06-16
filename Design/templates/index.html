@@ -1,0 +1,32 @@
+{% extends "base_generic.html" %}
+
+
+{% block content %}
+ <div><P class="zgl">Выполненные планы помещений ({{count}})</P></div>
+
+
+  {% if application_list %}
+
+  <ul>
+   {% for application in application_list %}
+                     <div class=" box-shadow content-window">
+                          <div class="d-flex ">
+                                <div>
+                                     <img src="{{application.image.url}}">
+                                </div>
+                                <div>
+                                    <div class="d-flex justify-content-between">
+                                         <p class="p-2"> {{application.name}} ({{application.categories}})</p>
+                                        <p class="p-2"> {{application.date}} - ({{application.status}})</p>
+                                    </div>
+                                    <p class="p-2"> {{application.description}}</p>
+                                </div>
+                         </div>
+                    </div>
+            {% endfor %}
+  </ul>
+ {% else %}
+    <p class="zgl">Планов помещений нет</p>
+  {% endif %}
+
+{% endblock %}
