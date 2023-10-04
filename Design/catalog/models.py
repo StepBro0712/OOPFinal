@@ -27,12 +27,12 @@ class Application(models.Model):
     username = models.ForeignKey('User', on_delete=models.SET_NULL, null=True)
     description = models.TextField(max_length=1000, verbose_name='Описание', help_text='Напишите описание ', blank=False)
     categories = models.ForeignKey('Categorise', verbose_name='Категория', on_delete=models.CASCADE)
-    image = models.ImageField(max_length=254, upload_to=get_name_file, verbose_name='Эскиз')
+    image = models.FileField(max_length=254, upload_to=get_name_file, verbose_name='Эскиз', null=True, blank=True)
     status = models.CharField(max_length=200, verbose_name='Статус',
                               choices=(('new', 'Новая'), ('in work', 'Принято в работу'), ('done', 'Выполнено')),
                               default='new')
     date = models.DateField(verbose_name='Дата добавления', auto_now_add=True)
-    img = models.ImageField(max_length=254, upload_to=get_name_file, null=True)
+    img = models.FileField(max_length=254, upload_to=get_name_file, null=True, blank=True)
     comment = models.TextField(max_length=1000, help_text="Комментарий", blank=True)
 
     def __str__(self):

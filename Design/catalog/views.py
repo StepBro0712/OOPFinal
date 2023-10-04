@@ -64,13 +64,22 @@ def delete_application(request, pk):
     return redirect('profile')
 
 
-class CreateAppView(LoginRequiredMixin, CreateView):
+class CreateAppView(CreateView):
     model = Application
-    form_class = ApplicationForm  # Используем созданную форму
+    form_class = ApplicationForm
     template_name = 'createapp.html'
     success_url = reverse_lazy('profile')
 
     def form_valid(self, form):
-        form.instance.username = self.request.user
-        form.instance.date = datetime.date.today()
+        # Получаем список всех выбранных файлов
+        images = self.request.FILES.getlist('image')
+
+        # Добавляем каждый файл к объекту модели
+        for image in images:
+            app = form.save(commit=False)
+            app.image = image
+            app.username = self.request.user
+            app.date = datetime.date.today()
+            app.save()
+
         return super().form_valid(form)
