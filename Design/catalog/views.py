@@ -8,6 +8,11 @@ from django.contrib.auth.decorators import login_required
 import datetime
 from catalog.models import Application
 from django.db.models import Q, Count
+from django.forms import ModelForm, ClearableFileInput
+
+from .forms import ApplicationForm
+from .models import Application
+
 
 
 class ApplicationAllListView(generic.ListView):
@@ -61,7 +66,7 @@ def delete_application(request, pk):
 
 class CreateAppView(LoginRequiredMixin, CreateView):
     model = Application
-    fields = ['name', 'description', 'categories', 'image']
+    form_class = ApplicationForm  # Используем созданную форму
     template_name = 'createapp.html'
     success_url = reverse_lazy('profile')
 

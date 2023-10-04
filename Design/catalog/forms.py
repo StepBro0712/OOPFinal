@@ -2,16 +2,19 @@ from django.core.validators import RegexValidator
 from django import forms
 from django.core.exceptions import ValidationError
 from catalog.models import User, Application
+from django.forms import ModelForm, ClearableFileInput
+from .models import Application
 
 
 class RegisterUserForm(forms.ModelForm):
     surname = forms.CharField(label='Фамилия', validators=[
         RegexValidator('^[а-яА-Я- ]+$', message="Разрешены только кириллица,тире и пробелы")],
-                            error_messages={
-                                'required': "Обязательное поле",
-                            })
+                              error_messages={
+                                  'required': "Обязательное поле",
+                              })
 
-    name = forms.CharField(label='Имя', validators=[RegexValidator('^[а-яА-Я- ]+$', message='Используйте кириллицу и пробелы')],
+    name = forms.CharField(label='Имя',
+                           validators=[RegexValidator('^[а-яА-Я- ]+$', message='Используйте кириллицу и пробелы')],
                            error_messages={
                                'required': "Обязательное поле",
                            })
@@ -72,3 +75,9 @@ class ApplicationForm(forms.ModelForm):
             raise forms.ValidationError({'comment': "Добавьте комментарий "})
         elif status == 'done' and not img:
             raise forms.ValidationError({'img': "Добавьте созданный дизайн"})
+    class Meta:
+        model = Application
+        fields = ['name', 'description', 'categories', 'image']
+        widgets = {
+            'image': forms.ClearableFileInput,
+        }

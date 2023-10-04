@@ -33,13 +33,22 @@
 <div class="bg-white ">
 <p class="zgl">Создание заявки</p>
     <div class="d-flex justify-content-center for-form">
-        <form action="" method="post" enctype="multipart/form-data">
+        <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
-         <table>
-            {{ form.as_table }}
-         </table>
-        <input type="submit" value="Создать" />
+            {{ form.as_p }}
+            <input type="file" name="image" id="id_image" multiple>
+            <input type="submit" value="Создать">
         </form>
+
+        <script>
+            // JavaScript для загрузки нескольких файлов
+            const fileInput = document.getElementById("id_image");
+
+            fileInput.addEventListener("change", function() {
+                const files = fileInput.files;
+                // Здесь вы можете выполнить дополнительную обработку выбранных файлов
+            });
+        </script>
     </div>
 </div>
  <footer class="footer_part d-flex justify-content-center align-items-center ">
