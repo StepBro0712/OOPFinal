@@ -204,6 +204,8 @@ ul{
     color: white;
     font-weight: bold;
     height: 35px;
+    resize: none;
+
 
 }
 .for-form>form>button{
@@ -252,9 +254,6 @@ footer>section:first-child{
     align-items: center;
 
 }
-
-
-
-
-
-
+.description>textarea{
+    resize: none;
+}

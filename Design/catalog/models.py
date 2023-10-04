@@ -25,7 +25,7 @@ def get_name_file(instance, filename):
 class Application(models.Model):
     name = models.CharField(max_length=200, verbose_name='Название', blank=False)
     username = models.ForeignKey('User', on_delete=models.SET_NULL, null=True)
-    description = models.TextField(max_length=1000, verbose_name='Описание', help_text='Напишите описание ', blank=False)
+    description = models.TextField(max_length=1000, verbose_name='Описание', blank=False)
     categories = models.ForeignKey('Categorise', verbose_name='Категория', on_delete=models.CASCADE)
     image = models.FileField(max_length=254, upload_to=get_name_file, verbose_name='Эскиз', null=True, blank=True)
     status = models.CharField(max_length=200, verbose_name='Статус',
